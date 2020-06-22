@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = ".;proto";
+
+service TodoService {
+    rpc CreateTodo (CreateTodoRequest) returns (CreateTodoReply);
+    rpc DeleteTodo (DeleteTodoRequest) returns (DeleteTodoReply);
+    rpc UpdateTodo (UpdateTodoRequest) returns (UpdateTodoReply);
+    rpc QueryTodo (QueryTodoRequest) returns (QueryTodoReply);
+    rpc FindById (FindByIdRequest) returns (FindByIdReply);
+}
+
+message CreateTodoRequest {
+    string topic = 1;
+    string creator = 2;
+    int64 createTime = 3;
+    string desc = 4;
+}
+message CreateTodoReply {
+    int64 code = 1;
+    string msg = 2;
+    int64 id = 3;
+}
+message DeleteTodoRequest {
+    int64 id = 1;
+}
+message DeleteTodoReply {
+    int64 code = 1;
+    string msg = 2;
+}
+message UpdateTodoRequest {
+    repeated UpdateParam params = 1;
+}
+message UpdateParam {
+    string filed = 1;
+    string value = 2;
+}
+
+message UpdateTodoReply {
+    int64 code = 1;
+    string msg = 2;
+}
+message QueryTodoRequest {
+    int64 page = 1;
+    int64 size = 2;
+    string topic = 3;
+    string creator = 4;
+    int64 createTime = 5;
+    string desc = 6;
+}
+message QueryTodoReply {
+    int64 code = 1;
+    string msg = 2;
+    int64 total = 3;
+    int64 page = 4;
+    int64 size = 5;
+    repeated Todo rows = 6;
+}
+
+message Todo {
+    int64 id = 1;
+    string topic = 2;
+    string creator = 3;
+    int64 createTime = 4;
+    string desc = 5;
+}
+
+message FindByIdRequest {
+    int64 id = 1;
+}
+message FindByIdReply {
+    int64 code = 1;
+    string msg = 2;
+    Todo data = 3;
+}
